@@ -51,7 +51,6 @@
         </div>
     </form>
 </div>
-
 <div id="loading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
         top: 0px; width: 100%; height: 100%; background-color:#ffffff; z-index: 300001;
         opacity: .8; filter: alpha(opacity=80);display:none">
@@ -59,22 +58,17 @@
         <img src="~/images/8.gif" />
     </div>
 </div>
-
-<div id="message">The data was saved!</div>
-
+<label id="successmessage">...waiting for result...</label>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/lib/jquery-unobtrusive-ajax/dist/jquery.unobtrusive-ajax.js"></script>
     <script>
         function Success() {
             // do something on success client side.
-            $('#message').val("The form was saved!");
-
+            $('#successmessage').text("The form was saved!");
         }
         function Failure() {
-
             alert("Form Failed");
         }
-
     </script>
 }
