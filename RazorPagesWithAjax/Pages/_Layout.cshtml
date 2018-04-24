@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>Add Nav here ...</div>
+    <div>
+        @RenderBody()
+    </div>
+    <script src="~/lib/jquery/jquery.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

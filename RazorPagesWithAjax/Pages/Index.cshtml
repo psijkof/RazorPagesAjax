@@ -1,0 +1,80 @@
+﻿@page
+@model RazorPagesWithAjax.Pages.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h2>Index</h2>
+
+@*
+    The contents of the element with id="thanks" will be replaced by the ajax result
+    The element with id="loading" will be shown as we wait for reply
+    The Success and Failure functions (Javascript) will be called on success or failure respectively.
+*@
+<div>
+    <label>Enter some text to prove it's a partial postback</label><input />
+</div>
+<div>
+    <form id="thanks" asp-page-handler="SaveForm"
+          data-ajax="true"
+          data-ajax-method="POST"
+          data-ajax-mode="replace"
+          data-ajax-update="#thanks"
+          data-ajax-loading="#loading"
+          data-ajax-success="Success"
+          data-ajax-failure="Failure">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="ContactForm.Email" class="control-label"></label>
+            <input asp-for="ContactForm.Email" class="form-control" />
+            <span asp-validation-for="ContactForm.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactForm.Name" class="control-label"></label>
+            <input asp-for="ContactForm.Name" class="form-control" />
+            <span asp-validation-for="ContactForm.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactForm.Subject" class="control-label"></label>
+            <input asp-for="ContactForm.Subject" class="form-control" />
+            <span asp-validation-for="ContactForm.Subject" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactForm.Message" class="control-label"></label>
+            <input asp-for="ContactForm.Message" class="form-control" />
+            <span asp-validation-for="ContactForm.Message" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </form>
+</div>
+
+<div id="loading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+        top: 0px; width: 100%; height: 100%; background-color:#ffffff; z-index: 300001;
+        opacity: .8; filter: alpha(opacity=80);display:none">
+    <div style="position: absolute; top: 40%; left: 40%; color: black;">
+        <img src="~/images/8.gif" />
+    </div>
+</div>
+
+<div id="message">The data was saved!</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/jquery-unobtrusive-ajax/dist/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        function Success() {
+            // do something on success client side.
+            $('#message').val("The form was saved!");
+
+        }
+        function Failure() {
+
+            alert("Form Failed");
+        }
+
+    </script>
+}
