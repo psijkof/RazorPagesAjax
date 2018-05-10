@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using HttpRequestExtension;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorPagesWithAjax.Model;
@@ -26,9 +27,7 @@ namespace RazorPagesWithAjax.Pages
             {
                 return Page();
             }
-            var containsAjaxHeader = Request.Headers.Keys.Contains("X-Requested-With");
-            var isAjajxKey = Request.Headers["X-Requested-With"][0] == "XMLHttpRequest";
-            if (isAjajxKey)
+            if (Request.IsAjaxRequest())
             {
                 Console.WriteLine("saving to the database ...");
                 // simulate long running operation
@@ -48,10 +47,10 @@ namespace RazorPagesWithAjax.Pages
                     // add the data for the partial
                     ViewData = ViewData
                 };
-
+                //return new BadRequestResult();
                 return view;
             }
-            return null;
+            return new OkResult();
         }
     }
 }
